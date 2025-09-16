@@ -1,24 +1,3 @@
-// // lib/toast.ts
-// export function showToast(message: string, type: "success" | "error" | "info" = "info") {
-//   const toastContainer = document.getElementById("app-toast");
-//   if (!toastContainer) return;
-
-//   const toast = document.createElement("div");
-//   toast.className = `alert alert-${type}`;
-//   toast.innerHTML = `
-//     <span>${message}</span>
-//     <button class="btn btn-ghost btn-xs ml-2">✕</button>
-//   `;
-
-//   // Remove on click
-//   toast.querySelector("button")?.addEventListener("click", () => toast.remove());
-
-//   // Auto remove after 3s
-//   setTimeout(() => toast.remove(), 3000);
-
-//   toastContainer.appendChild(toast);
-// }
-
 // lib/toast.ts
 export function showToast(
   message: string,
