@@ -38,55 +38,64 @@ export default function DashboardPageImpl() {
   };
 
   return (
-    <main className="min-h-screen p-6 bg-base-200">
+    <main className="min-h-screen p-4 sm:p-6 bg-base-200">
       {/* Header / Search + Controls */}
-      <div className="mb-4 flex flex-col sm:flex-row justify-between gap-4">
-        <input
-          type="text"
-          placeholder="Search..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="input input-bordered"
-        />
+      <div className="mb-6 space-y-4">
+        {/* Search bar - full width on mobile */}
+        <div className="w-full">
+          <input
+            type="text"
+            placeholder="Search customers..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="input input-bordered w-full"
+          />
+        </div>
 
-        <div className="flex gap-2">
-          {/* Toggle view mode */}
-          <button
-            className={`btn ${viewMode === "cards" ? "btn-primary" : "btn-ghost"}`}
-            onClick={() => setViewMode("cards")}
-          >
-            <LayoutGrid className="w-5 h-5" />
-          </button>
-          <button
-            className={`btn ${viewMode === "table" ? "btn-primary" : "btn-ghost"}`}
-            onClick={() => setViewMode("table")}
-          >
-            <Table className="w-5 h-5" />
-          </button>
+        {/* Controls row */}
+        <div className="flex flex-col sm:flex-row gap-3 sm:justify-end">
+          {/* View mode buttons */}
+          <div className="flex gap-2">
+            <button
+              className={`btn flex-1 sm:flex-none ${viewMode === "cards" ? "btn-primary" : "btn-ghost"}`}
+              onClick={() => setViewMode("cards")}
+            >
+              <LayoutGrid className="w-5 h-5" />
+              <span className="hidden sm:inline ml-2">Cards</span>
+            </button>
+            <button
+              className={`btn flex-1 sm:flex-none ${viewMode === "table" ? "btn-primary" : "btn-ghost"}`}
+              onClick={() => setViewMode("table")}
+            >
+              <Table className="w-5 h-5" />
+              <span className="hidden sm:inline ml-2">Table</span>
+            </button>
+          </div>
 
-          {/* Sort toggle */}
-          <select
-            className="select select-bordered"
-            value={sortOrder}
-            onChange={(e) => setSortOrder(e.target.value as "newest" | "oldest")}
-          >
-            <option value="newest">Newest first</option>
-            <option value="oldest">Oldest first</option>
-          </select>
+          {/* Sort and Add customer row */}
+          <div className="flex gap-2">
+            <select
+              className="select select-bordered flex-1 sm:flex-none"
+              value={sortOrder}
+              onChange={(e) => setSortOrder(e.target.value as "newest" | "oldest")}
+            >
+              <option value="newest">Newest first</option>
+              <option value="oldest">Oldest first</option>
+            </select>
 
-          {/* Add customer */}
-          <button
-            className="btn btn-primary"
-            onClick={() => setSelectedCustomer({})}
-          >
-            Add Customer
-          </button>
+            <button
+              className="btn btn-primary flex-1 sm:flex-none"
+              onClick={() => setSelectedCustomer({})}
+            >
+              Add Customer
+            </button>
+          </div>
         </div>
       </div>
 
       {/* View: Cards or Table */}
       {viewMode === "cards" ? (
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {sorted.map((c) => (
             <CustomerCard
               key={c.id}
@@ -94,7 +103,11 @@ export default function DashboardPageImpl() {
               onClick={() => setSelectedCustomer(c)}
             />
           ))}
-          {loading && <p>Loading customers...</p>}
+          {loading && (
+            <div className="col-span-full text-center py-8">
+              <p>Loading customers...</p>
+            </div>
+          )}
         </div>
       ) : (
         <div className="overflow-x-auto bg-base-100 rounded-lg shadow">
@@ -103,7 +116,7 @@ export default function DashboardPageImpl() {
               <tr>
                 <th>Name</th>
                 <th>Phone</th>
-                <th>Address</th>
+                <th className="hidden sm:table-cell">Address</th>
                 <th>Date</th>
               </tr>
             </thead>
@@ -116,13 +129,15 @@ export default function DashboardPageImpl() {
                 >
                   <td>{c.name}</td>
                   <td>{c.phone}</td>
-                  <td>{c.address}</td>
+                  <td className="hidden sm:table-cell">{c.address}</td>
                   <td>{c.date}</td>
                 </tr>
               ))}
               {loading && (
                 <tr>
-                  <td colSpan={4}>Loading customers...</td>
+                  <td colSpan={4} className="text-center py-4">
+                    Loading customers...
+                  </td>
                 </tr>
               )}
             </tbody>
@@ -133,7 +148,7 @@ export default function DashboardPageImpl() {
       {/* Modal */}
       {selectedCustomer && (
         <dialog open className="modal">
-          <div className="modal-box">
+          <div className="modal-box max-w-4xl">
             <CustomerForm
               initialData={selectedCustomer}
               onSave={handleSave}

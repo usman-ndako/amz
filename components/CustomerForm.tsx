@@ -27,6 +27,24 @@ const numberFields = [
 ] as const;
 type NumberField = typeof numberFields[number];
 
+// Field display names mapping
+const fieldDisplayNames: Record<string, string> = {
+  shoulder: "Shoulder",
+  sleeveLength: "Sleeve Length",
+  topLength: "Top Length",
+  chest: "Chest",
+  tommy: "Tummy",
+  neck: "Neck",
+  cufflinks: "Cufflinks",
+  trouserLength: "Trouser Length",
+  waist: "Waist",
+  lap: "Lap",
+  ankleSize: "Ankle Size",
+  calf: "Calf",
+  embroidery: "Embroidery",
+  lengthWidth: "Length & Width",
+};
+
 function isNumberField(name: string): name is NumberField {
   return (numberFields as readonly string[]).includes(name);
 }
@@ -106,8 +124,8 @@ export default function CustomerForm({
                   key={String(field)}
                   className="p-3 bg-base-200 rounded-xl shadow-sm"
                 >
-                  <p className="text-xs font-semibold opacity-70 capitalize">
-                    {String(field)}
+                  <p className="text-xs font-semibold opacity-70">
+                    {fieldDisplayNames[String(field)] || String(field)}
                   </p>
                   <p className="text-lg font-medium">
                     {String(formData[field as keyof Customer] ?? "-")}
@@ -136,8 +154,8 @@ export default function CustomerForm({
         </div>
       ) : (
         // EDIT FORM
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* Name */}
+        <div className="space-y-4 pt-6">
+          {/* Name - Full width on mobile, stacked above phone */}
           <div className="form-control">
             <label className="label">
               <span className="label-text">Name</span>
@@ -150,7 +168,7 @@ export default function CustomerForm({
             />
           </div>
 
-          {/* Phone */}
+          {/* Phone - Full width on mobile, below name */}
           <div className="form-control">
             <label className="label">
               <span className="label-text">Phone</span>
@@ -163,8 +181,8 @@ export default function CustomerForm({
             />
           </div>
 
-          {/* Address */}
-          <div className="form-control col-span-2">
+          {/* Address - Full width */}
+          <div className="form-control">
             <label className="label">
               <span className="label-text">Address</span>
             </label>
@@ -177,12 +195,14 @@ export default function CustomerForm({
           </div>
 
           {/* Measurements Grid */}
-          <div className="col-span-2">
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
               {numberFields.map((field) => (
                 <div key={field} className="form-control">
                   <label className="label">
-                    <span className="label-text capitalize">{field}</span>
+                    <span className="label-text">
+                      {fieldDisplayNames[field] || field}
+                    </span>
                   </label>
                   <input
                     type="number"
@@ -199,9 +219,11 @@ export default function CustomerForm({
               ))}
 
               {/* Extra fields */}
-              <div className="form-control col-span-2">
+              <div className="form-control sm:col-span-2 md:col-span-3">
                 <label className="label">
-                  <span className="label-text">Embroidery</span>
+                  <span className="label-text">
+                    {fieldDisplayNames.embroidery}
+                  </span>
                 </label>
                 <input
                   name="embroidery"
@@ -211,9 +233,11 @@ export default function CustomerForm({
                 />
               </div>
 
-              <div className="form-control col-span-2">
+              <div className="form-control sm:col-span-2 md:col-span-3">
                 <label className="label">
-                  <span className="label-text">Length & Width</span>
+                  <span className="label-text">
+                    {fieldDisplayNames.lengthWidth}
+                  </span>
                 </label>
                 <input
                   name="lengthWidth"
@@ -226,7 +250,7 @@ export default function CustomerForm({
           </div>
 
           {/* Actions */}
-          <div className="col-span-2 flex justify-end gap-2 mt-4">
+          <div className="flex justify-end gap-2 pt-4">
             <button onClick={handleSaveClick} className="btn btn-primary">
               Save
             </button>
