@@ -45,10 +45,11 @@ export default function CustomerCard({ customer, onClick }: CustomerCardProps) {
           </p>
         )}
 
-        {/* Action Footer */}
+        {/* Action Footer - Futuristic Button */}
         <div className="card-actions justify-end mt-4">
-          <button className="btn btn-sm btn-outline btn-primary">
-            View Details
+          <button className="btn btn-sm btn-primary !rounded-lg shadow-lg shadow-primary/25 hover:shadow-primary/40 hover:scale-105 transition-all duration-300 relative overflow-hidden group">
+            <span className="absolute inset-0 bg-primary-focus opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+            <span className="relative">View Details</span>
           </button>
         </div>
       </div>
