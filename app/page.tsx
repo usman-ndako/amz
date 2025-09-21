@@ -9,9 +9,9 @@ export default function Home() {
         <Image
           src="/logo.png" // Place your logo in /public/logo.png
           alt="Tailor Shop Logo"
-          width={120}
-          height={120}
-          className="rounded-full shadow-lg"
+          width={100}
+          height={100}
+          className="rounded-lg"
         />
       </div>
 
@@ -22,7 +22,7 @@ export default function Home() {
 
       {/* Get Started Button */}
       <Link href="/dashboard">
-        <button className="btn btn-primary btn-lg">Get Started</button>
+        <button className="btn btn-primary rounded-lg">Get Started</button>
       </Link>
     </main>
   );

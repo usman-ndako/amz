@@ -138,16 +138,22 @@ export default function CustomerForm({
           <div className="flex justify-end gap-2 pt-4">
             <button
               onClick={() => setEditable(true)}
-              className="btn btn-secondary flex items-center gap-2"
+              className="btn btn-secondary shadow-lg shadow-secondary/25 hover:shadow-secondary/40 hover:scale-105 transition-all duration-300 flex items-center gap-2 relative overflow-hidden group"
+              style={{ borderRadius: '0.5rem' }}
             >
-              <Edit className="w-4 h-4" /> Edit
+              <span className="absolute inset-0 bg-secondary-focus opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+              <Edit className="w-4 h-4 relative z-10" />
+              <span className="relative z-10">Edit</span>
             </button>
             {onDelete && formData.id && (
               <button
                 onClick={handleDeleteClick}
-                className="btn btn-error flex items-center gap-2"
+                className="btn btn-error shadow-lg shadow-error/25 hover:shadow-error/40 hover:scale-105 transition-all duration-300 flex items-center gap-2 relative overflow-hidden group"
+                style={{ borderRadius: '0.5rem' }}
               >
-                <Trash className="w-4 h-4" /> Delete
+                <span className="absolute inset-0 bg-error-focus opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                <Trash className="w-4 h-4 relative z-10" />
+                <span className="relative z-10">Delete</span>
               </button>
             )}
           </div>
